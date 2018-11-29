@@ -1,0 +1,66 @@
+5 files:
+keygen - Gen random strings
+Encryptors-client & Server:
+  -otp_enc_d - perform actual encoding
+  -
+decryptors-client & Server
+
+encryptors cannot talk to decryptors
+Write Keygen first ✔
+  -keygen 100 > mykey (generates 100s random characters you use as a key)
+
+
+HINT 11/19/2018
+
+He writes:
+"
+e#I AM DATA@XQ DZABCD$
+"
+
+e - I am the encryptor
+# - start data/end type of program
+I AM DATA - the data to encrypt
+@ - End data string
+XQ DZABCD - the key
+$ - end all
+
+
+
+What I need to do (simplified):
+
+MAIN OBJECTIVE: encrypt and decrypt plaintext to cypher using a keygenned key
+  - create 5 small programs to do this 2 daemons(servers) two clients (access daemons), and keygen
+
+Use these to send and receive sequences of bytes for en/dec-ryption by the appropriate daemons:
+  - send(), recv(), socket(), bind(), listen(), and accept()
+
+The 5 programs:
+ -  opt_enc_d: runs in background as daemon
+    - must output an error if it cannot be run due to a network error, such as the ports being unavailable
+    - its function is to perform the actual encoding
+    - This program will listen on a particular port/socket, assigned when it is first ran
+    - When a connection is made, otp_enc_d must call accept() to generate the socket used for h
+      actual communication, and then use a separate process to handle the rest of the transaction (see below),
+      which will occur on the newly accepted socket.
+
+ -  opt_enc: sends message, key, and marker that says it's the encode client
+
+
+
+
+#####    this is what I have to do fr   ########
+
+ after keygenned -> take in argument of keyfile, message file, and portnumber....   done
+ - then read in the files, stick together the info into the string that BEN showed us in class...       done
+ - then send that string to the daemon in chunks....                                                    done
+ - the daemon takes the string apart, converts to message and the key
+ - then encrypts it
+
+
+DONE - make sure you keep a size 5 array of pids, set them all to something like negative 5, and reap them when they are donezo
+
+ - once the key is encrypted, sent it back (with a dollar sign at the end to know when to stop reading)
+ - print out encrypted string to screen
+
+
+ repeat for decode...but just...decode
