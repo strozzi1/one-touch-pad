@@ -73,8 +73,8 @@ int main(int argv, char *argc[])
 	char* output = malloc(size);
 	memset(output, '\0', size );
 
-	printf("sizeof array: %d\n", size);
-	sprintf(output, "e#%s@%s$", inbuff, keybuff);
+//	printf("sizeof array: %d\n", size);
+	sprintf(output, "e#%s@%s$", inbuff, keybuff);				//cat together my symbols, message, and key
 	//set up output to server
 	//printf("catted: %s\n",output);
 	struct sockaddr_in serverAddress;
@@ -101,12 +101,13 @@ int main(int argv, char *argc[])
 	if (connect(socketFD, (struct sockaddr*)&serverAddress, sizeof(serverAddress)) < 0) // Connect socket to address
 		error("CLIENT: ERROR connecting");
 
+/*
 	// Get input message from user  REMOVE
 	printf("CLIENT: Enter text to send to the server, and then hit enter: ");
 	memset(buffer, '\0', sizeof(buffer)); // Clear out the buffer array
 	fgets(buffer, sizeof(buffer) - 1, stdin); // Get input from the user, trunc to buffer - 1 chars, leaving \0
 	buffer[strcspn(buffer, "\n")] = '\0'; // Remove the trailing \n that fgets adds
-
+*/
 
 	//from here on out, edit this!
 
@@ -120,7 +121,6 @@ int main(int argv, char *argc[])
 	while (totalsent<strlen(output) ){
 		charsWritten = send(socketFD, outptr+totalsent*sizeof(char), strlen(output)-totalsent, 0); // Write to the server					IMPORTANTE!!!!!
 		totalsent+=charsWritten;
-		printf("sent: %d\n", totalsent);
 		if (charsWritten < 0) error("CLIENT: ERROR writing to socket");
 		if (charsWritten < strlen(output)) printf("CLIENT: WARNING: Not all data written to socket!\n");
 	}
